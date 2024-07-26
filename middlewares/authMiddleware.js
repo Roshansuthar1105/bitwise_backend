@@ -14,10 +14,9 @@ const authMiddleware = async (req, res, next) => {
     req.user = userData;
     req.userId=userData._id;
     req.token=jwtToken;
-    // res.status(200).json({userData });
     next();
   } catch (error) {
-    res.status(400).json({"message":"Unauthorised user token not found !"});
+    res.status(400).json({"message":"Unauthorised http token not provided !"});
   }
 };
 export default authMiddleware;

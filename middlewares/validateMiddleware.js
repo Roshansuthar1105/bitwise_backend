@@ -12,7 +12,6 @@ const validate = (schema) => async (req, res, next) => {
     const error = {
       status,message,extraDetails
     }
-    console.log(error);
     next(error);
   }
 };

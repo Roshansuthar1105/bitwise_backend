@@ -4,27 +4,26 @@ import Course from "../models/courseSchema.js";
 import bcryptjs from "bcryptjs";
 const homePage = async (req, res) => {
   try {
-    res.status(202).send("this is home page from controller");
+    res.status(202).send("home page");
   } catch (error) {
-    res.status(404).send({ message: error });
+    res.status(404).send({error});
   }
 };
 const regPage = async (req, res) => {
   try {
-    // console.log(req.body)
     const { email, password, phone, username } = req.body;
     const userExist = await User.findOne({ email: email });
     if (userExist) {
-      return res.status(400).send({ msg: "Email already exist" });
+      return res.status(400).send({ message: "Email already exist" });
     }
     const userCreated = await User.create({ email, password, phone, username });
     res.status(201).json({
-      msg: userCreated,
+      message: userCreated,
       userId: userCreated._id.toString(),
       token: await userCreated.generateToken(),
     });
   } catch (error) {
-    res.status(400).send({ message: "Error" });
+    res.status(400).send({error});
   }
 };
 const login = async (req, res) => {
@@ -54,37 +53,35 @@ const contact = async (req, res) => {
     const { email, message, username } = req.body;
     const userExist = await User.findOne({ email: email });
     if (!userExist) {
-      return res.status(400).send({ msg: "user not found Sign Up now" });
+      return res.status(400).send({ message: "user not found Sign Up now" });
     }
     const newMessage = await Feedback.create({ email, username, message });
     res.status(201).json({
-      msg: newMessage,
+      message: newMessage,
       userId: newMessage._id.toString(),
-      // token: await userCreated.generateToken(),
+      token: await userCreated.generateToken(),
     });
   } catch (error) {
-    console.log(error);
-    res.status(400).send({ message: "Error", err: error });
+    res.status(400).json({ message:error });
   }
 };
 const user = async (req,res)=>{
   try {
     const user = req.user;
-    console.log("user -> userdata",user);
     return res.status(200).json({user});
   } catch (error) {
-    res.status(400).send({ message: "Error", error });
+    res.status(400).json({ message:error });
   }
 }
 const courses = async(req,res)=>{
   try {
     const response = await Course.find({});
     if(!response){
-      return res.status(400).send(`courses page error ${error}`);
+      return res.status(400).send(`fetching courses error : ${error}`);
     }
     res.status(200).json(response);
   } catch (error) {
-    res.status(400).send(`courses page error ${error}`);
+    res.status(400).send(`fetching courses error :  ${error}`);
   }
 }
 export { homePage, regPage, login, contact , user ,courses };
