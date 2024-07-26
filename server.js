@@ -17,7 +17,7 @@ const corsOption = {
     credentials:true
 }
 app.use(cors(corsOption));
-
+// https://bitwise-backend.onrender.com/api/v1/auth/login
 app.use(express.json());
 app.use("api/v1/auth/",router);
 app.use("/contact",contactRouter);

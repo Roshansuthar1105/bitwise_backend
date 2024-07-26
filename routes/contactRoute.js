@@ -4,5 +4,5 @@ import { contact } from "../controllers/authController.js";
 import validate from "../middlewares/validateMiddleware.js";
 const contactRouter = express.Router();
 
-contactRouter.route("/contact").post(validate(contactSchema),contact);
+contactRouter.route("/").post(validate(contactSchema),contact);
 export default contactRouter ;
