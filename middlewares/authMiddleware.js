@@ -3,7 +3,7 @@ import User from "../models/userSchema.js";
 const authMiddleware = async (req, res, next) => {
   const token = req.header("Authorization");
   if (!token) {
-    res.status(401).json({message:"Unauthorised http token not provided !"});
+    return res.status(401).json({message:"Unauthorised http token not provided !"});
   }
   const jwtToken = token.replace("Bearer", "").trim();
   try {

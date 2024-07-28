@@ -51,18 +51,18 @@ const login = async (req, res) => {
 const contact = async (req, res) => {
   try {
     const { email, message, username } = req.body;
-    const userExist = await User.findOne({ email: email });
-    if (!userExist) {
-      return res.status(400).send({ message: "user not found Sign Up now" });
-    }
+    // const userExist = await User.findOne({ email: email });
+    // if (!userExist) {
+    //   return res.status(400).send({ message: "user not found Sign Up now" });
+    // }
     const newMessage = await Feedback.create({ email, username, message });
-    res.status(201).json({
-      message: newMessage,
+    res.status(201).json({"hello ":"hello from contact , message sent",
+    message: newMessage.message,
       userId: newMessage._id.toString(),
       token: await userCreated.generateToken(),
     });
   } catch (error) {
-    res.status(400).json({ message:error });
+    res.status(400).send(error);
   }
 };
 const user = async (req,res)=>{
@@ -79,9 +79,17 @@ const courses = async(req,res)=>{
     if(!response){
       return res.status(400).send(`fetching courses error : ${error}`);
     }
-    res.status(200).json(response);
+    res.status(200).json( {data:response});
   } catch (error) {
     res.status(400).send(`fetching courses error :  ${error}`);
   }
 }
-export { homePage, regPage, login, contact , user ,courses };
+const defcontroller = async(req,res)=>{
+  try {
+    res.status(200).send("hello from def controller");
+  } catch (error) {
+    res.status(400).send(`fetching courses error :  ${error}`);
+  }
+}
+
+export { homePage, regPage, login, contact , user ,courses ,defcontroller };
